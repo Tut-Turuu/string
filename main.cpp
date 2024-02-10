@@ -9,13 +9,19 @@ int main() {
 
     string str3("123");
 
-    str3 = str2 + str1;
-
-    // str1 += str;
+    str3 += str1 + str2;
 
     std::cout << "str3: " << str3 << '\n';
 
-    std::cout << "find: " << str1.find('c') << '\n';
+    std::cout << "str2: " << str2 << '\n';
+
+    std::cout << "str1: " << str1 << '\n';
+
+    std::cout << "str1 + str2 len: " << (str1 + str2).length() << '\n'; 
+
+    std::cout << "str3 length: " << str3.length() << '\n'; 
+
+    std::cout << "find: " << str1.find('s') << '\n';
 
     std::cout << "str1 > str2: " << (str1 > str2) << '\n';
 

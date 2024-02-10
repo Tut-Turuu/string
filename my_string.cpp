@@ -2,33 +2,37 @@
 #include "cstring"
 #include <stdexcept>
 
+
 uint clength(const char* str) {
     uint i = 0;
     while (str[i] != '\0') ++i;
     return i;
 }
 
-
 void string::reserve(uint new_cap) {
     if (cap >= new_cap) return;
     cap = new_cap;
 
     char* new_arr = new char[new_cap];
-    memcpy(new_arr, arr, size);
-    delete[] arr;
+
+    if (arr) {
+        memcpy(new_arr, arr, size+1);
+        delete[] arr;
+    }
+
     arr = new_arr;
 }
 
 string::string(): arr(nullptr), size(0), cap(0) {}
 
-string::string(const char* c_str): size(clength(c_str)), cap(clength(c_str)) {
+string::string(const char* c_str): size(clength(c_str)), cap(clength(c_str)+1) {
     arr = new char[cap];
-    memcpy(arr, c_str, size);
+    memcpy(arr, c_str, size+1);
 }
 
 string::string(const string& another): size(another.size), cap(another.cap) {
     arr = new char[cap];
-    memcpy(arr, another.arr, size);
+    memcpy(arr, another.arr, size+1);
 }
 
 string::string(string&& another): size(size), cap(cap) {
@@ -49,7 +53,7 @@ string& string::operator=(const string& another) {
 
     arr = new char[cap];
 
-    memcpy(arr, another.arr, size);
+    memcpy(arr, another.arr, size+1);
     return *this;
 }
 
@@ -77,22 +81,22 @@ string string::operator+(const string& another) const {
     
     string str;
 
-    str.reserve(size + another.size);
+    str.reserve(size + another.size + 1);
+
     str.size = size + another.size;
 
-    
     memcpy(str.arr, arr, size);
-    memcpy(str.arr + size, another.arr, another.size);
+    memcpy(str.arr + size, another.arr, another.size+1);
     return std::move(str);
 }
 
 string& string::operator+=(const string& another) {
-
-    if (size + another.size > cap) {
-        reserve(size + another.size);
+    if (size + another.size + 1 > cap) {
+        reserve(size + another.size + 1);
     }
 
-    memcpy(arr + size, another.arr, another.size);
+    memcpy(arr + size, another.arr, another.size+1);
+    size += another.size;
 
     return *this;
 }
