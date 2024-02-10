@@ -41,6 +41,7 @@ string::string(string&& another): size(size), cap(cap) {
 }
 
 string& string::operator=(const string& another) {
+    if (this == &another) return *this;
     delete[] arr;
 
     size = another.size;
@@ -49,10 +50,12 @@ string& string::operator=(const string& another) {
     arr = new char[cap];
 
     memcpy(arr, another.arr, size);
-
+    return *this;
 }
 
 string& string::operator=(string&& another) {
+    if (this == &another) return *this;
+
     delete[] arr;
 
     size = another.size;
@@ -62,6 +65,8 @@ string& string::operator=(string&& another) {
     another.arr = nullptr;
     another.cap = 0;
     another.size = 0;
+
+    return *this;
 }
 
 string::~string() {
@@ -135,6 +140,7 @@ char& string::at(uint index) {
 
 std::ostream& operator<<(std::ostream& ostm, const string& str) {
     ostm << str.arr;
+    return ostm;
 }
 
 std::istream& operator>>(std::istream& istm, string& str) {
@@ -143,5 +149,5 @@ std::istream& operator>>(std::istream& istm, string& str) {
     istm >> buff;
 
     str = string(buff);
-
+    return istm;
 }
