@@ -1,0 +1,3 @@
+/home/user/Desktop/c++/string/build/CMakeFiles/rebuild_cache.dir
+/home/user/Desktop/c++/string/build/CMakeFiles/edit_cache.dir
+/home/user/Desktop/c++/string/build/CMakeFiles/my_string.dir
